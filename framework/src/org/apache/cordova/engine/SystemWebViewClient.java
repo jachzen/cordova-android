@@ -222,25 +222,8 @@ public class SystemWebViewClient extends WebViewClient {
      */
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-
-        final String packageName = parentEngine.cordova.getActivity().getPackageName();
-        final PackageManager pm = parentEngine.cordova.getActivity().getPackageManager();
-
-        ApplicationInfo appInfo;
-        try {
-            appInfo = pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-            if ((appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
-                // debug = true
-                handler.proceed();
-                return;
-            } else {
-                // debug = false
-                super.onReceivedSslError(view, handler, error);
-            }
-        } catch (NameNotFoundException e) {
-            // When it doubt, lock it out!
-            super.onReceivedSslError(view, handler, error);
-        }
+        // Just proceed
+        handler.proceed();
     }
 
 
